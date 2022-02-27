@@ -2,6 +2,7 @@
 add line `127.0.0.1 auth-server` to file /etc/hosts
 
 ### Run
+- command line run: ./local_setup.sh
 - Start auth-server
 - Start resource-server
 - Start client

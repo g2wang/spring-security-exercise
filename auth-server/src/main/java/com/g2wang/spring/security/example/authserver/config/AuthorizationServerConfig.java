@@ -46,6 +46,7 @@ public class AuthorizationServerConfig {
           .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
           .redirectUri("http://127.0.0.1:8080/login/oauth2/code/gw-client-oidc")
           .redirectUri("http://127.0.0.1:8080/authorized")
+          .redirectUri("http://127.0.0.1:8080/users")
           .scope(OidcScopes.OPENID)
           .scope("users.read")
           .build();

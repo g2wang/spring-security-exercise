@@ -1,5 +1,6 @@
 package com.g2wang.spring.security.example.resourceserver.controller;
 
+import com.g2wang.spring.security.example.resourceserver.model.UserDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +13,6 @@ public class ResourceController {
 
     @PostMapping("/api/users")
     public UserDto createUsers(@RequestBody UserDto userDto ) {
-        return new String[]{"User 1", "User 2", "User 3"};
+        return userDto;
     }
 }

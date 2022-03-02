@@ -12,13 +12,12 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-          .authorizeRequests(authorizeRequests ->
-            authorizeRequests.anyRequest().authenticated()
-          )
-          .oauth2Login(oauth2Login ->
-            oauth2Login.loginPage("/oauth2/authorization/gw-client-oidc"))
-          .oauth2Client(withDefaults());
+        http.authorizeRequests().antMatchers("/api/register").permitAll()
+                .antMatchers("/api/users/**").authenticated()
+                .and()
+                .oauth2Login(oauth2Login ->
+                        oauth2Login.loginPage("/oauth2/authorization/gw-client-oidc"))
+                .oauth2Client(withDefaults());
         return http.build();
     }
 }

@@ -6,8 +6,10 @@ add line `127.0.0.1 auth-server` to file /etc/hosts
 - Start auth-server
 - Start resource-server
 - Start client
-- then use your browser to visit: `http://127.0.0.1:8080/articles`
-  Enter the credentials `admin/password`
+- then http post to: `http://127.0.0.1:8080/api/register`
+  by submitting username and password
+- then http post to: `http://127.0.0.1:8080/api/login`
+  by submitting username and password
 
 ### Functional Requirements
 Create a simple spring boot application that handles the following endpoints:

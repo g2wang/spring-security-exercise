@@ -12,7 +12,7 @@ public class ResourceServerConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/users/**").authenticated()
           .mvcMatchers("/api/users/**")

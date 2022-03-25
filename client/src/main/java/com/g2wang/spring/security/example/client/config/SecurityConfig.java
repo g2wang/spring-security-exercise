@@ -12,7 +12,8 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/api/register").permitAll()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/users/**").authenticated()
                 .and()
                 .oauth2Login(oauth2Login ->

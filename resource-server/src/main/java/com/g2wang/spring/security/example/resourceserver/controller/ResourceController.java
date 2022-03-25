@@ -18,7 +18,7 @@ public class ResourceController {
         return userService.getUserByUuid(uuid);
     }
 
-    @PostMapping("/api/users")
+    @PostMapping("/api/register")
     public User register(@RequestBody UserRegister userRegister) {
         return userService.register(userRegister);
     }

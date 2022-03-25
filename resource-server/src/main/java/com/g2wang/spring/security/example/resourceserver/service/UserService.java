@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -19,6 +21,7 @@ public class UserService {
 
     public User register(UserRegister userRegister) {
         User user = new User();
+        user.setUuid(UUID.randomUUID().toString());
         user.setUsername(userRegister.username());
         user.setPassword(passwordEncoder.encode(userRegister.password()));
         return userJpaRepository.save(user);

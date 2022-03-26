@@ -16,9 +16,7 @@ public class CustomSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/api/register").permitAll()
-                .and()
+        http.csrf().disable()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests.anyRequest().authenticated())
                 .formLogin(withDefaults());

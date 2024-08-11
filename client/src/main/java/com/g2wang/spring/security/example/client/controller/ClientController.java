@@ -5,6 +5,7 @@ import com.g2wang.spring.security.example.client.model.UserLogin;
 import com.g2wang.spring.security.example.client.model.UserRegister;
 import com.g2wang.spring.security.example.client.model.UserUpdate;
 import com.g2wang.spring.security.example.client.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Optional;
@@ -21,6 +23,7 @@ import java.util.Optional;
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient;
 
 @RestController
+@Slf4j
 public class ClientController {
 
     @Autowired
@@ -80,20 +83,28 @@ public class ClientController {
      * @return
      */
     @PostMapping("/api/login")
-    public String login(UserLogin userLogin) {
+    public String login(@RequestBody UserLogin userLogin) {
+
+        String body = "username=" + urlEncode(userLogin.username())
+                + "&password=" + urlEncode(userLogin.password());
 
         // first get authorization code from authorization server
         ResponseEntity<Void> responseEntity = this.webClient
                 .post()
                 .uri("http://127.0.0.1:9000/login/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .bodyValue(userLogin)
+                .bodyValue(body)
                 .accept(MediaType.TEXT_PLAIN)
                 .retrieve()
                 .toBodilessEntity()
                 .block();
 
+
         HttpHeaders headers = responseEntity.getHeaders();
+
+        log.info("status: {}", responseEntity.getStatusCode());
+        log.info("headers: {}", headers);
+
         String locationHeader = headers.get("Location").get(0);
         String authCode = locationHeader.substring(locationHeader.indexOf("?") + 1);
 
@@ -107,6 +118,14 @@ public class ClientController {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
+    }
+
+    private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            return s;
+        }
     }
 
 }

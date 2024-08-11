@@ -2,6 +2,7 @@ package com.g2wang.spring.security.example.resourceserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Generated;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "tbl_user")
 public class User {
     @Id
+    @Generated
     private String uuid;
 
     private String username;
